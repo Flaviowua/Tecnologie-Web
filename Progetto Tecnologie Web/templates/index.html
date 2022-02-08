@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Ricerca il tuo programma televisivo </title>
+	
+</head>
+<body style="background-color:blue">
+
+	<div class = "foto_homepage" style="text-align:center">
+
+		<img class = "foto_dream" style="border: 10px solid black" src="{{ url_for('static', filename='SEARCH_DREAM.PNG') }}" alt="logo per effettuare la ricerca" align = "center" position ="absolute" >
+	</div>
+	<div style="text-align:center;color:red;margin-bottom:10px;font-size:20px">
+		<p class="ricerca_effettuata">
+			<h1>Quale programma televisivo vuoi cercare?</h1>
+		</p>
+	</div>
+	<div class= "spazio_ricerca" style="text-align:center">
+		<form method="POST">
+			<div class="blocco_form">
+				<div class="blocco_input">
+					<input style="font-size:20px;width:320px" name="programma_televisivo" type="text" placeholder="Inserisci il nome del programma TV">
+				</div>
+				<div class="blocco_bottone">
+					<button style="margin-top:10px;font-size:20px">Ricerca Programma Televisivo </button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+</body>
+
+</html>

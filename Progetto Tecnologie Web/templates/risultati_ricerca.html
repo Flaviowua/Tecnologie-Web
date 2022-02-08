@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang = "it">
+<head>
+<title>Risultato Ricerca</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='stili.css') }}"/>
+
+<script type ="text/javascript">
+<!-- funzione che permette di visualizzare la descrizione di un programma televisivo , sfruttando i tag html presenti in essa -->
+function trama(descrizione , nome){
+alert(" FORMATTAZIONE DESCRIZIONE DISPONIBILE IN ALTO ALLA PAGINA");
+document.getElementById("demo").innerHTML = "Descrizione Del Programma Televisivo: " + nome + "  " + descrizione;
+}
+</script>
+</head>
+
+<body style="background-color:blue">
+
+
+	<div style="font-size:30px">			
+			Risultati della ricerca:
+			{{lista_programmi|count}}
+	</div></br></br>
+	
+	<div class = "pagina_precedente" style="float:left;text-align:center">
+		<form  method="GET">
+			<input style="font-size:20px" type="submit" value="INDIETRO" />
+		</form>
+	</div> </br></br>
+
+
+
+	<section class="contenuto_lista">
+	
+		<div id = "demo" style = "width:1800px;font-size:25px;color:black;font-family:monospace,cursive">
+		</div>
+
+		{% for programma_televisivo in lista_programmi %}
+		<div class="contenitore_programma" style="float:left;background-color:#007FFF;width:1800px">
+			<div style="float:left;border:10px solid white ">{% if "None" in  programma_televisivo.foto_media  %}
+				<img alt ="immagine non disponibile" src = "https://www.nowasteproject.com/frontend/img/no-image.png">
+				{% else %}
+				<img class="foto" src="{{ programma_televisivo.foto_media }}" alt="Immagine della Locandina">
+				{% endif %}
+			</div></br>
+			<div style="float:left; margin-bottom:30px;background-color:#A5D9FD;width:1750px;border:10px solid white">
+
+					<span class="informazione">NOME PROGRAMMA TELEVISIVO: </span>
+					<span class="contenuto">{{ programma_televisivo.nome_programma }}</span></br> </br>
+					<span class="informazione">LINGUA ORIGINALE: </span>
+					<span class="contenuto">{{programma_televisivo.lingua }} </span> </br> </br>
+					<span class="informazione">GENERE PROGRAMMA TELEVISIVO: </span>
+					<span class="contenuto">{{programma_televisivo.generi}} </span></br> </br>
+					<span class="informazione">TIPOLOGIA PROGRAMMA TELEVISIVO: </span>
+					<span class="contenuto">{{ programma_televisivo.tipo }}</span></br> </br>
+					<span class="informazione">STATO PROGRAMMA TELEVISIVO: </span>
+					<span class="contenuto">{{ programma_televisivo.stato }}</span></br> </br>
+					<span class="informazione">DEBUTTO PROGRAMMA TELEVISIVO: </span>
+					<span class="contenuto">{{ programma_televisivo.debutto }}</span></br> </br>
+					<span class="informazione">CONCLUSIONE PROGRAMMA TELEVISIVO: </span>
+					<span class="contenuto">{{ programma_televisivo.conclusione }}</span></br> </br>
+					<span class="informazione">NUMERO EPISODI: </span>
+					<span class="contenuto">{{ programma_televisivo.numero_episodi }}</span></br> </br>
+					<span class="informazione">PRODOTTO IN: </span>
+					<span class="contenuto">{{ programma_televisivo.luogo_produzione }}</span></br> </br>
+					<span class="informazione">VALUTAZIONE PROGRAMMA TELEVISIVO: </span>
+					<span class="contenuto">{{ programma_televisivo.valutazione }}</span></br> </br>
+					<span class="informazione">DURATA EPISODIO: </span>
+					<span class="contenuto">30 minuti</span></br> </br>
+					<span class="informazione">DESCRIZIONE PROGRAMMA TELEVISIVO (NON FORMATTATA): </span>
+					<span class="contenuto">{{ programma_televisivo.descrizione }}</span></br></br>
+					<div onclick="trama('{{ programma_televisivo.descrizione }}','{{ programma_televisivo.nome_programma }}')">
+						<h1 style="font-size:30px;color:black">Per la verifica della disponibilità della descrizione formattata:</h1>
+						<button style="margin-left:15px;font-size:25px">CLICCA QUI </button>
+					</div> </br></br>
+						
+					<div>
+						<span>{% if programma_televisivo.personaggi  %}
+								<h1>Cast dei personaggi nel Programma Televisivo: 
+									<span style="color:blue">{{ programma_televisivo.nome_programma }}</span></br>
+									<h2> Ordinati da destra verso sinistra, in base al numero di episodi in cui sono comparsi.</h2> 
+								</h1>
+							{% else %}
+								<h1>Lista dei personaggi non disponibile.</h1>
+							{% endif %}
+						</span></br>
+						{% for persona in programma_televisivo.personaggi %}
+						<div class="allinea">
+							<span>{% if "None" in  persona.foto_attore  %}
+									<img alt ="immagine non disponibile" src = "https://www.nowasteproject.com/frontend/img/no-image.png">
+								{% else %}
+									<img alt = "foto dell'attore" src = "{{ persona.foto_attore }}">
+								{% endif %}
+							</span></br>
+							<span class="informazione1">NOME ATTORE: </span>
+							<span class="contenuto1">{{ persona.nome }}</span></br>
+							<span class="informazione1">NATO IL: </span>
+							<span class="contenuto1">{{ persona.nato }}</span>
+							<span class="informazione1">A: </span>
+							<span class="contenuto1">{{ persona.luogo_nascita }}</span></br>
+							<span class="informazione1">MORTO IL: </span>
+							<span class="contenuto1">{{ persona.morto }}</span></br>
+							<span class="informazione1">SESSO: </span>
+							<span class="contenuto1">{{ persona.genere }}</span></br>
+							<span> {% if "None" in  persona.foto_personaggio  %}
+									<img style = "margin-top:10px" alt ="immagine non disponibile" src = "https://www.nowasteproject.com/frontend/img/no-image.png">
+								{% else %}
+									<img style = "margin-top:10px" alt = "immagine personaggio" src = "{{ persona.foto_personaggio }}">
+								{% endif %}
+							</span></br>
+							<span class="informazione1">NOME PERSONAGGIO: </span>
+							<span class="contenuto1">{{ persona.nome_personaggio }}</span></br>
+						</div>
+						{% endfor %}
+					</div>
+						
+					</br>
+					
+			</div>
+		</div>
+		</br> {% endfor %}
+
+	</section>
+
+
+
+</body>
+
+</html>
